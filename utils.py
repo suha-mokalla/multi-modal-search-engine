@@ -1,5 +1,8 @@
+from pathlib import Path
+
 import faiss
 import numpy as np
+import pymupdf
 from sentence_transformers import SentenceTransformer
 
 
@@ -49,3 +52,34 @@ class VectorStore:
         ]
 
         return results
+
+
+def extract_text_from_pdf(pdf_path: str) -> list[str]:
+    """Extract text from PDF file, returning a list of page contents."""
+    doc = pymupdf.open(pdf_path)
+    texts = []
+    for page in doc:
+        text = page.get_text()
+        if text.strip():  # Only add non-empty pages
+            texts.append(text)
+    return texts
+
+
+def process_pdf_folder(folder_path: str) -> list[str]:
+    """Process all PDFs in a folder and return their texts."""
+    all_texts = []
+    pdf_files = Path(folder_path).glob("*.pdf")
+
+    for pdf_path in pdf_files:
+        try:
+            texts = extract_text_from_pdf(str(pdf_path))
+            # Add source information to each page
+            texts = [
+                f"Source: {pdf_path.name}, Page {i + 1}: {text}"
+                for i, text in enumerate(texts)
+            ]
+            all_texts.extend(texts)
+        except Exception as e:
+            print(f"Error processing {pdf_path}: {e}")
+
+    return all_texts
