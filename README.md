@@ -21,9 +21,22 @@ Here is an example of how to run the CLI text search:
 poetry run python main.py --pdf_folder ./pdf_folder --query "beginner friendly" --num_results 3
 ```
 
+### Text Search App
+
+To use the web application, run this:
+
+```
+poetry run streamlit run app.py
+```
+This will open the web application in your default browser. Upload the PDFs, enter the search query and get results, as simple as that. Below are the screenshots from the app.
+
+![image](./static/text_app1.png)
+![image](./static/text_app2.png)
+
+
 ### To-Do:
 
-- Add a web interface for the CLI text search
+- ~~Add a web interface for the CLI text search~~
 - Add cli for image search
 - Add a web interface for the image search
 - Add cli for audio search
