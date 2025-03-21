@@ -1,7 +1,7 @@
 import argparse
 import logging
 
-from utils import TextEncoder, VectorStore, process_pdf_folder
+from utils.text_utils import TextEncoder, VectorStore, process_pdf_folder
 
 logging.basicConfig(
     level=logging.INFO,
